@@ -6,8 +6,8 @@ export default () => {
   const app = useApp();
   const physics = usePhysics();
 
-  const geometry = new THREE.ConeGeometry( 5, 15, 3 );
-  const material = new THREE.MeshStandardMaterial( {color: 'red'} );
+  const geometry = new THREE.ConeGeometry( 5, 10, 3 );
+  const material = new THREE.MeshStandardMaterial( {color: 'gray'} );
   const physicsConvex = new THREE.Mesh( geometry, material );
   app.add( physicsConvex );
 
@@ -25,7 +25,7 @@ export default () => {
   app.addEventListener('triggerout', event => {
     console.log('repo: triggerout: ', event.oppositePhysicsId);
     if (localPlayer.characterController && event.oppositePhysicsId === localPlayer.characterController.physicsId) {
-      physicsConvex.material.color.set('red');
+      physicsConvex.material.color.set('gray');
     }
   });
 
