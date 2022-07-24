@@ -6,7 +6,10 @@ export default () => {
   const app = useApp();
   const physics = usePhysics();
 
-  const geometry = new THREE.ConeGeometry( 5, 10, 3 );
+  const geometry = new THREE.ConeGeometry( 5, 10, 3 ); // ok, is convex
+  // const geometry = new THREE.DodecahedronGeometry( 5, 0 ); // ok, is convex
+  // const geometry = new THREE.TorusGeometry( 10, 3, 16, 100 ); // partly ok, will turn to convex hull, so will trigger in the center empty part of the torus.
+  // const geometry = new THREE.TorusKnotGeometry( 10, 3, 100, 16 ); // partly ok, similar to torus.
   const material = new THREE.MeshStandardMaterial( {color: 'gray'} );
   const physicsConvex = new THREE.Mesh( geometry, material );
   app.add( physicsConvex );
