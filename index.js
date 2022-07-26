@@ -14,9 +14,26 @@ export default () => {
   const physicsConvex = new THREE.Mesh( geometry, material );
   app.add( physicsConvex );
 
+  debugger
+
   const dynamic = false;
-  const physicsObject = physics.addConvexGeometry(physicsConvex, dynamic);
+  let physicsObject;
+
+  if (!window.isAddedConvex) {
+    physicsObject = physics.addConvexGeometry(physicsConvex, dynamic);
+    console.log('add', {physicsObject})
+    window.isAddedConvex = true
+  } else {
+    const buffer = physics.cookConvexGeometry(physicsConvex);
+    console.log({buffer})
+    const shapeAddress = physics.createConvexShape(buffer);
+    console.log({shapeAddress})
+    physicsObject = physics.addConvexShape(shapeAddress, app.position, app.quaternion, app.scale, dynamic);
+    console.log({physicsObject})
+  }
+
   const result = physics.setTrigger(physicsObject.physicsId);
+  console.log({result})
 
   const localPlayer = useLocalPlayer();
   app.addEventListener('triggerin', event => {
