@@ -37,13 +37,13 @@ export default () => {
 
   const localPlayer = useLocalPlayer();
   app.addEventListener('triggerin', event => {
-    console.log('repo: triggerin: ', event.oppositePhysicsId);
+    console.log('repo: triggerin: ', event.myPhysicsId, event.oppositePhysicsId);
     if (localPlayer.characterController && event.oppositePhysicsId === localPlayer.characterController.physicsId) {
       physicsConvex.material.color.set('cyan');
     }
   });
   app.addEventListener('triggerout', event => {
-    console.log('repo: triggerout: ', event.oppositePhysicsId);
+    console.log('repo: triggerout: ', event.myPhysicsId, event.oppositePhysicsId);
     if (localPlayer.characterController && event.oppositePhysicsId === localPlayer.characterController.physicsId) {
       physicsConvex.material.color.set('gray');
     }
