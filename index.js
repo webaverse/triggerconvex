@@ -19,17 +19,30 @@ export default () => {
   const dynamic = false;
   let physicsObject;
 
-  if (!window.isAddedConvex) {
+  if (!window.convexTriggerType) {
+    console.log('---addConvexGeometry')
     physicsObject = physics.addConvexGeometry(physicsConvex, dynamic);
     console.log('add', {physicsObject})
-    window.isAddedConvex = true
-  } else {
+  } else if (window.convexTriggerType === 1) {
+    console.log('---addConvexShape')
     const buffer = physics.cookConvexGeometry(physicsConvex);
     console.log({buffer})
     const shapeAddress = physics.createConvexShape(buffer);
     console.log({shapeAddress})
     physicsObject = physics.addConvexShape(shapeAddress, app.position, app.quaternion, app.scale, dynamic);
     console.log({physicsObject})
+  } else if (window.convexTriggerType === 2) {
+    console.log('---addCookedConvexGeometry')
+    const buffer = physics.cookConvexGeometry(physicsConvex);
+    console.log({buffer})
+    physicsObject = physics.addCookedConvexGeometry(buffer, app.position, app.quaternion, app.scale, dynamic);
+    console.log({physicsObject})
+  }
+
+  if (!window.convexTriggerType) {
+    window.convexTriggerType = 1
+  } else {
+    window.convexTriggerType++;
   }
 
   const result = physics.setTrigger(physicsObject.physicsId);
